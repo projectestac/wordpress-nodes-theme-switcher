@@ -1,18 +1,14 @@
 <?php
 
 /**
- * @package Nodes_Editor_Widget
- * @version 1.0.0
- */
-/**
  * Plugin Name: Nodes: Theme Switch Widget
  * Plugin URI: https://agora.xtec.cat/nodes/
  * Description: Widget to switch between Nodes and Astra themes from the control panel.
- * Author: Jose Alejandro Escobar Mosqueda
- * Version: 1.0.0
- * License: GPLv3
+ * @package Nodes_Editor_Widget
+ * @author: Jose Alejandro Escobar Mosqueda
+ * @version: 1.0.0
+ * @license: GPLv3
  */
-
 const ASTRA = 'astra';
 
 /**
@@ -22,12 +18,12 @@ $url_param = $_GET['dashboard-theme-widget'] ?? '';
 
 if (!empty($url_param)) {
     if ($url_param === 'activate_nodes') {
-        $reactorTheme = get_option('stylesheet_nodes_1');
-        if ($reactorTheme) {
-            switch_theme($reactorTheme);
+        $reactor_theme = get_option('stylesheet_nodes_1');
+        if ($reactor_theme) {
+            switch_theme($reactor_theme);
         }
     } elseif ($url_param === 'activate_astra') {
-        firstTime();
+        first_time();
         switch_theme(ASTRA);
     }
 }
@@ -45,30 +41,36 @@ add_action('wp_dashboard_setup', function () {
     }
 });
 
-function dashboard_widget_theme_switch()
-{
+function dashboard_widget_theme_switch() {
+
     $current_theme = strtolower(wp_get_theme());
 
     echo '<div style="display:flex; align-items:center;">
         <div style="flex:1; margin-bottom:10px;">
-            <p>This widget allows you to switch between the Nodes and Astra themes. Choose the desired theme and click the button to activate it.</p>
+            <p>Des d\'aquí podeu canviar el tema del vostre Nodes. La primera vegada que activeu el tema
+               del Nodes 2, s\'importaran els paràmetres de configuració del tema del Nodes 1. Podeu
+               tornar enrere i fer el canvi tantes vegades com vulgueu, però la importació només es
+               farà una vegada.</p>
         </div>
     </div>';
 
     if (str_contains($current_theme, 'nodes')) {
-        echo '<a class="button button-primary" href="' . admin_url() . '?dashboard-theme-widget=activate_astra">Activate Astra</a>';
+        echo '<a class="button button-primary" href="' . admin_url() . '?dashboard-theme-widget=activate_astra">Activa el tema del Nodes 2</a>';
     } else {
-        echo '<a class="button button-primary" href="' . admin_url() . '?dashboard-theme-widget=activate_nodes">Activate Nodes</a>';
+        echo '<a class="button button-primary" href="' . admin_url() . '?dashboard-theme-widget=activate_nodes">Activa el tema del Nodes 1</a>';
     }
+
 }
 
-function firstTime()
-{
+function first_time() {
+
     $stylesheet_nodes_1 = get_option('stylesheet_nodes_1');
+
     if (!$stylesheet_nodes_1) {
         $stylesheet = get_option('stylesheet');
         if (!update_option('stylesheet_nodes_1', $stylesheet)) {
             error_log('Failed to update stylesheet_nodes_1 option');
         }
     }
+
 }
