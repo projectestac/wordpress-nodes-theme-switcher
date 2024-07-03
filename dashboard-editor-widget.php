@@ -21,6 +21,7 @@ if (!empty($url_param)) {
         $reactor_theme = get_option('stylesheet_nodes_1');
         if ($reactor_theme) {
             switch_theme($reactor_theme);
+            launch_query();
         }
     } elseif ($url_param === 'activate_astra') {
         first_time();
@@ -73,4 +74,12 @@ function first_time() {
         }
     }
 
+}
+
+function launch_query(){
+    global $wpdb;
+    $table = $wpdb->prefix . 'options';
+    $col = 'option_name';
+    $sql = $wpdb->prepare("DELETE FROM $table WHERE $col LIKE %s", '%astra%');
+    $wpdb->query($sql);
 }
