@@ -24,7 +24,9 @@ if (!empty($url_param)) {
         }
     } elseif ($url_param === 'activate_astra') {
         first_time();
-        switch_theme(ASTRA);
+        add_action('wp_loaded', function () {
+            switch_theme(ASTRA);
+        });
     }
 }
 
