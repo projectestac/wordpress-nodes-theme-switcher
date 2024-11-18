@@ -37,7 +37,7 @@ add_action('wp_dashboard_setup', function () {
     if (current_user_can('switch_themes')) {
         wp_add_dashboard_widget(
             'dashboard_widget_theme_switch',
-            'Canvi de tema',
+            'Nodes 2',
             'dashboard_widget_theme_switch'
         );
     }
@@ -49,18 +49,23 @@ function dashboard_widget_theme_switch() {
 
     echo '<div style="display:flex; align-items:center;">
         <div style="flex:1; margin-bottom:10px;">
-            <p>Des d\'aquí podeu canviar el tema del vostre Nodes. La primera vegada que activeu el tema
-               del Nodes 2, s\'importaran els paràmetres de configuració del tema del Nodes 1. Podeu
-               tornar enrere i fer el canvi tantes vegades com vulgueu, però la importació només es
-               farà una vegada.</p>
+            <p>La nova versió de Nodes incorpora un disseny més actual i l\'edició per blocs. Per fer el canvi, feu clic al
+               botó Activa. Haureu de fer algunes modificacions que podeu preparar seguint
+               <a href="https://projectes.xtec.cat/digital/serveis-digitals/nodes/guia-de-nodes/pautes-per-al-canvi/" target="_blank">
+               aquestes pautes</a>.
+            </p>
         </div>
     </div>';
 
     if (str_contains($current_theme, 'nodes')) {
-        echo '<a class="button button-primary" href="' . admin_url() . '?dashboard-theme-widget=activate_astra">Activa el tema del Nodes 2</a>';
+        echo '<a class="button button-primary" href="' . admin_url() . '?dashboard-theme-widget=activate_astra">Activa Nodes 2</a>';
     } else {
-        echo '<a class="button button-primary" href="' . admin_url() . '?dashboard-theme-widget=activate_nodes">Activa el tema del Nodes 1</a>';
+        echo '<a class="button button-primary" href="' . admin_url() . '?dashboard-theme-widget=activate_nodes">Activa Nodes 1</a>';
     }
+
+    echo '&nbsp;&nbsp;&nbsp;';
+    echo '<a class="button button-secondary" href="https://projectes.xtec.cat/digital/serveis-digitals/nodes/guia-de-nodes/"
+             target="_blank">Guia de Nodes</a>';
 
 }
 
